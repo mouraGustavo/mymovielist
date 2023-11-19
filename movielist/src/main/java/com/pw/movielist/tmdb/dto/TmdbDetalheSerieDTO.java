@@ -2,22 +2,23 @@ package com.pw.movielist.tmdb.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.math.BigDecimal;
 import java.util.List;
 
-public class TmdbDetailsMovieDTO {
-
+public class TmdbDetalheSerieDTO {
     @JsonProperty("adult")
     private Boolean adult;
 
     @JsonProperty("backdrop_path")
     private String backdropPath;
 
-    @JsonProperty("belongs_to_collection")
-    private Object belongsToCollection;
+    @JsonProperty("created_by")
+    private List<CreatorDTO> createdBy;
 
-    @JsonProperty("budget")
-    private Double budget;
+    @JsonProperty("episode_run_time")
+    private List<Integer> episodeRunTime;
+
+    @JsonProperty("first_air_date")
+    private String firstAirDate;
 
     @JsonProperty("genres")
     private List<GenreDTO> genres;
@@ -28,14 +29,41 @@ public class TmdbDetailsMovieDTO {
     @JsonProperty("id")
     private Long id;
 
-    @JsonProperty("imdb_id")
-    private String imdbId;
+    @JsonProperty("in_production")
+    private boolean inProduction;
+
+    @JsonProperty("languages")
+    private List<String> languages;
+
+    @JsonProperty("last_air_date")
+    private String lastAirDate;
+
+    @JsonProperty("last_episode_to_air")
+    private EpisodeDTO lastEpisodeToAir;
+
+    @JsonProperty("name")
+    private String name;
+
+    @JsonProperty("next_episode_to_air")
+    private String nextEpisodeToAir;
+
+    @JsonProperty("networks")
+    private List<NetworkDTO> networks;
+
+    @JsonProperty("number_of_episodes")
+    private Integer numberOfEpisodes;
+
+    @JsonProperty("number_of_seasons")
+    private Integer numberOfSeasons;
+
+    @JsonProperty("origin_country")
+    private List<String> originCountry;
 
     @JsonProperty("original_language")
     private String originalLanguage;
 
-    @JsonProperty("original_title")
-    private String originalTitle;
+    @JsonProperty("original_name")
+    private String originalName;
 
     @JsonProperty("overview")
     private String overview;
@@ -52,14 +80,8 @@ public class TmdbDetailsMovieDTO {
     @JsonProperty("production_countries")
     private List<ProductionCountryDTO> productionCountries;
 
-    @JsonProperty("release_date")
-    private String releaseDate;
-
-    @JsonProperty("revenue")
-    private Integer revenue;
-
-    @JsonProperty("runtime")
-    private Integer runtime;
+    @JsonProperty("seasons")
+    private List<SeasonDTO> seasons;
 
     @JsonProperty("spoken_languages")
     private List<SpokenLanguageDTO> spokenLanguages;
@@ -70,11 +92,8 @@ public class TmdbDetailsMovieDTO {
     @JsonProperty("tagline")
     private String tagline;
 
-    @JsonProperty("title")
-    private String title;
-
-    @JsonProperty("video")
-    private Boolean video;
+    @JsonProperty("type")
+    private String type;
 
     @JsonProperty("vote_average")
     private Double voteAverage;
@@ -98,20 +117,28 @@ public class TmdbDetailsMovieDTO {
         this.backdropPath = backdropPath;
     }
 
-    public Object getBelongsToCollection() {
-        return belongsToCollection;
+    public List<CreatorDTO> getCreatedBy() {
+        return createdBy;
     }
 
-    public void setBelongsToCollection(Object belongsToCollection) {
-        this.belongsToCollection = belongsToCollection;
+    public void setCreatedBy(List<CreatorDTO> createdBy) {
+        this.createdBy = createdBy;
     }
 
-    public Double getBudget() {
-        return budget;
+    public List<Integer> getEpisodeRunTime() {
+        return episodeRunTime;
     }
 
-    public void setBudget(Double budget) {
-        this.budget = budget;
+    public void setEpisodeRunTime(List<Integer> episodeRunTime) {
+        this.episodeRunTime = episodeRunTime;
+    }
+
+    public String getFirstAirDate() {
+        return firstAirDate;
+    }
+
+    public void setFirstAirDate(String firstAirDate) {
+        this.firstAirDate = firstAirDate;
     }
 
     public List<GenreDTO> getGenres() {
@@ -138,12 +165,84 @@ public class TmdbDetailsMovieDTO {
         this.id = id;
     }
 
-    public String getImdbId() {
-        return imdbId;
+    public boolean isInProduction() {
+        return inProduction;
     }
 
-    public void setImdbId(String imdbId) {
-        this.imdbId = imdbId;
+    public void setInProduction(boolean inProduction) {
+        this.inProduction = inProduction;
+    }
+
+    public List<String> getLanguages() {
+        return languages;
+    }
+
+    public void setLanguages(List<String> languages) {
+        this.languages = languages;
+    }
+
+    public String getLastAirDate() {
+        return lastAirDate;
+    }
+
+    public void setLastAirDate(String lastAirDate) {
+        this.lastAirDate = lastAirDate;
+    }
+
+    public EpisodeDTO getLastEpisodeToAir() {
+        return lastEpisodeToAir;
+    }
+
+    public void setLastEpisodeToAir(EpisodeDTO lastEpisodeToAir) {
+        this.lastEpisodeToAir = lastEpisodeToAir;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getNextEpisodeToAir() {
+        return nextEpisodeToAir;
+    }
+
+    public void setNextEpisodeToAir(String nextEpisodeToAir) {
+        this.nextEpisodeToAir = nextEpisodeToAir;
+    }
+
+    public List<NetworkDTO> getNetworks() {
+        return networks;
+    }
+
+    public void setNetworks(List<NetworkDTO> networks) {
+        this.networks = networks;
+    }
+
+    public Integer getNumberOfEpisodes() {
+        return numberOfEpisodes;
+    }
+
+    public void setNumberOfEpisodes(Integer numberOfEpisodes) {
+        this.numberOfEpisodes = numberOfEpisodes;
+    }
+
+    public Integer getNumberOfSeasons() {
+        return numberOfSeasons;
+    }
+
+    public void setNumberOfSeasons(Integer numberOfSeasons) {
+        this.numberOfSeasons = numberOfSeasons;
+    }
+
+    public List<String> getOriginCountry() {
+        return originCountry;
+    }
+
+    public void setOriginCountry(List<String> originCountry) {
+        this.originCountry = originCountry;
     }
 
     public String getOriginalLanguage() {
@@ -154,12 +253,12 @@ public class TmdbDetailsMovieDTO {
         this.originalLanguage = originalLanguage;
     }
 
-    public String getOriginalTitle() {
-        return originalTitle;
+    public String getOriginalName() {
+        return originalName;
     }
 
-    public void setOriginalTitle(String originalTitle) {
-        this.originalTitle = originalTitle;
+    public void setOriginalName(String originalName) {
+        this.originalName = originalName;
     }
 
     public String getOverview() {
@@ -202,28 +301,12 @@ public class TmdbDetailsMovieDTO {
         this.productionCountries = productionCountries;
     }
 
-    public String getReleaseDate() {
-        return releaseDate;
+    public List<SeasonDTO> getSeasons() {
+        return seasons;
     }
 
-    public void setReleaseDate(String releaseDate) {
-        this.releaseDate = releaseDate;
-    }
-
-    public Integer getRevenue() {
-        return revenue;
-    }
-
-    public void setRevenue(Integer revenue) {
-        this.revenue = revenue;
-    }
-
-    public Integer getRuntime() {
-        return runtime;
-    }
-
-    public void setRuntime(Integer runtime) {
-        this.runtime = runtime;
+    public void setSeasons(List<SeasonDTO> seasons) {
+        this.seasons = seasons;
     }
 
     public List<SpokenLanguageDTO> getSpokenLanguages() {
@@ -250,20 +333,12 @@ public class TmdbDetailsMovieDTO {
         this.tagline = tagline;
     }
 
-    public String getTitle() {
-        return title;
+    public String getType() {
+        return type;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public Boolean getVideo() {
-        return video;
-    }
-
-    public void setVideo(Boolean video) {
-        this.video = video;
+    public void setType(String type) {
+        this.type = type;
     }
 
     public Double getVoteAverage() {

@@ -1,8 +1,11 @@
-package com.pw.movielist.application.model.dto;
+package com.pw.movielist.principal.model.dto;
 
 import com.pw.movielist.tmdb.dto.TmdbFilmeSerieDTO;
 
-public class CardFilmeDTO {
+import java.util.Objects;
+
+public class CardFilmeSerieDTO {
+
     private Long id;
 
     private String titulo;
@@ -11,11 +14,11 @@ public class CardFilmeDTO {
 
     private String urlImagem;
 
-    public CardFilmeDTO(TmdbFilmeSerieDTO tmdbFilme) {
-        this.id = tmdbFilme.getId();
-        this.titulo = tmdbFilme.getTitle();
-        this.descricao = tmdbFilme.getOverview();
-        this.urlImagem = "https://image.tmdb.org/t/p/original" + tmdbFilme.getPosterPath();
+    public CardFilmeSerieDTO(TmdbFilmeSerieDTO tmdbFilmeSerie) {
+        this.id = tmdbFilmeSerie.getId();
+        this.titulo = tmdbFilmeSerie.getTitle();
+        this.descricao = tmdbFilmeSerie.getOverview();
+        this.urlImagem = Objects.isNull(tmdbFilmeSerie.getPosterPath()) ? null : "https://image.tmdb.org/t/p/original" + tmdbFilmeSerie.getPosterPath();
     }
 
     public Long getId() {
