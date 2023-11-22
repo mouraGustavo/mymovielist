@@ -10,12 +10,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("tmdb")
-public class TmdbController {
+@CrossOrigin(origins= "*", maxAge = 36)
+@RequestMapping("card")
+public class CardController {
 
     private final ConexaoTmdbService conexaoTmdbService;
 
-    public TmdbController(ConexaoTmdbService conexaoTmdbService) {
+    public CardController(ConexaoTmdbService conexaoTmdbService) {
         this.conexaoTmdbService = conexaoTmdbService;
     }
     @GetMapping("/buscar/todos")
