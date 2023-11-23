@@ -21,6 +21,9 @@ public class TmdbFilmeSerieDTO {
     @JsonProperty("original_title")
     private String originalTitle;
 
+    @JsonProperty("original_name")
+    private String originalName;
+
     @JsonProperty("overview")
     private String overview;
 
@@ -35,6 +38,9 @@ public class TmdbFilmeSerieDTO {
 
     @JsonProperty("title")
     private String title;
+
+    @JsonProperty("name")
+    private String name;
 
     @JsonProperty("video")
     private Boolean video;
@@ -67,6 +73,22 @@ public class TmdbFilmeSerieDTO {
 
     public void setGenreIds(Long[] genreIds) {
         this.genreIds = genreIds;
+    }
+
+    public String getOriginalName() {
+        return originalName;
+    }
+
+    public void setOriginalName(String originalName) {
+        this.originalName = originalName;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Long getId() {

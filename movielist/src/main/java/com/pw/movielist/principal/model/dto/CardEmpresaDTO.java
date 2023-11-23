@@ -12,7 +12,7 @@ public class CardEmpresaDTO {
     public CardEmpresaDTO(TmdbEmpresaDTO empresa) {
         this.id = empresa.getId();
         this.nome = empresa.getName();
-        this.urlImagem = empresa.getLogoPath();//TODO: CASO A LOGO DA EMPRESA VENHA VAZIA SETAR UMA IMAGEM PADRÃO DE LOGO
+        this.urlImagem = empresa.getLogoPath() == null ? "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/HD_transparent_picture.png/1280px-HD_transparent_picture.png" : "https://image.tmdb.org/t/p/original"  + empresa.getLogoPath();//TODO: CASO A LOGO DA EMPRESA VENHA VAZIA SETAR UMA IMAGEM PADRÃO DE LOGO
     }
 
     public Long getId() {

@@ -16,9 +16,9 @@ public class CardFilmeSerieDTO {
 
     public CardFilmeSerieDTO(TmdbFilmeSerieDTO tmdbFilmeSerie) {
         this.id = tmdbFilmeSerie.getId();
-        this.titulo = tmdbFilmeSerie.getTitle();
+        this.titulo = tmdbFilmeSerie.getTitle() == null ? tmdbFilmeSerie.getName() : tmdbFilmeSerie.getTitle();
         this.descricao = tmdbFilmeSerie.getOverview();
-        this.urlImagem = Objects.isNull(tmdbFilmeSerie.getPosterPath()) ? null : "https://image.tmdb.org/t/p/original" + tmdbFilmeSerie.getPosterPath();
+        this.urlImagem = Objects.isNull(tmdbFilmeSerie.getPosterPath()) ? "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png" : "https://image.tmdb.org/t/p/original" + tmdbFilmeSerie.getPosterPath();
     }
 
     public Long getId() {

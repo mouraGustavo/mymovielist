@@ -18,13 +18,13 @@ public class CardPessoaDTO {
         this.id = pessoa.getId();
         this.nome = pessoa.getName();
         this.cargo = pessoa.getKnownForDepartment();
-        this.urlImagem =  Objects.isNull(pessoa.getProfilePath()) ? null :"https://image.tmdb.org/t/p/original" + pessoa.getProfilePath();
+        this.urlImagem =  Objects.isNull(pessoa.getProfilePath()) ? "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png" :"https://image.tmdb.org/t/p/original" + pessoa.getProfilePath();
     }
     public CardPessoaDTO(TmdbElencoDTO elenco) {
         this.id = elenco.getId();
         this.nome = elenco.getName();
         this.cargo = elenco.getKnownForDepartment();
-        this.urlImagem = Objects.isNull(elenco.getProfilePath()) ? null :"https://image.tmdb.org/t/p/original" + elenco.getProfilePath();
+        this.urlImagem = Objects.isNull(elenco.getProfilePath()) ? "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png" :"https://image.tmdb.org/t/p/original" + elenco.getProfilePath();
     }
 
     public Long getId() {
