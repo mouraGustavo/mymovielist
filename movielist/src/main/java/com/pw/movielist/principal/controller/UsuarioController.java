@@ -33,6 +33,12 @@ public class UsuarioController {
         return usuarioService.buscarUsuarios();
     }
 
+    @GetMapping("/currentUser")
+    @Operation(summary = "Resgata o usuario logado")
+    public ResponseEntity<UsuarioDTO> getByID(@RequestParam Long id){
+        return usuarioService.buscarUsuarioPorID(id);
+    }
+
     @GetMapping("/login")
     @Operation(summary = "Verifica usuario")
     public ResponseEntity<UsuarioDTO> getByEmail(@RequestParam String email){

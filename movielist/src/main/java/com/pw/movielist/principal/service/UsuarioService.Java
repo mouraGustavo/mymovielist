@@ -34,5 +34,9 @@ public class UsuarioService{
             .stream().map(UsuarioDTO::new).toList().get(0)
         );
     }
+
+    public ResponseEntity<UsuarioDTO> buscarUsuarioPorID(Long id){
+        return ResponseEntity.status(HttpStatus.OK).body(usuarioRepository.findById(id).stream().map(UsuarioDTO::new).toList().get(0));
+    }
 }
 
