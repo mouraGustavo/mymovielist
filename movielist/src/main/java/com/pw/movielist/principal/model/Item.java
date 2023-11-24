@@ -26,6 +26,9 @@ public class Item {
     @Column(name = "id_imdb")
     private String idImdb;
 
+    @Column(name = "url_imagem")
+    private String urlImagem;
+
     @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_lista")
@@ -37,6 +40,7 @@ public class Item {
         this.avaliacao = itemDTO.getAvaliacao().toString();
         this.comentario = itemDTO.getComentario();
         this.idImdb = itemDTO.getIdTmdb();
+        this.urlImagem = itemDTO.getUrlImagem();
     }
 
     public Item() {
@@ -96,5 +100,13 @@ public class Item {
 
     public void setPertenceA(Lista pertenceA) {
         this.pertenceA = pertenceA;
+    }
+
+    public String getUrlImagem() {
+        return urlImagem;
+    }
+
+    public void setUrlImagem(String urlImagem) {
+        this.urlImagem = urlImagem;
     }
 }

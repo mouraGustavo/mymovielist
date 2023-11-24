@@ -18,6 +18,8 @@ public class ItemDTO {
 
     private String idTmdb;
 
+    private String urlImagem;
+
     public ItemDTO(Item item) {
         this.id = item.getId();
         this.nome = item.getNome();
@@ -25,15 +27,25 @@ public class ItemDTO {
         this.avaliacao = Integer.valueOf(item.getAvaliacao());
         this.status = item.getStatus();
         this.idTmdb = item.getIdImdb();
+        this.urlImagem = item.getUrlImagem();
     }
 
-    public ItemDTO(Long id, String nome, String comentario, Integer avaliacao, String status, String idTmdb) {
+    public ItemDTO(Long id, String nome, String comentario, Integer avaliacao, String status, String idTmdb, String urlImagem) {
         this.id = id;
         this.nome = nome;
         this.comentario = comentario;
         this.avaliacao = avaliacao;
         this.status = status;
         this.idTmdb = idTmdb;
+        this.urlImagem = urlImagem;
+    }
+
+    public String getUrlImagem() {
+        return urlImagem;
+    }
+
+    public void setUrlImagem(String urlImagem) {
+        this.urlImagem = urlImagem;
     }
 
     public String getNome() {

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins= "*", maxAge = 36)
 @RequestMapping("lista")
 public class ListaController {
     //TODO: Implementar sessionId para que somente os usuarios autorizados possam modificar a lista

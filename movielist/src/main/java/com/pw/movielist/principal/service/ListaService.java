@@ -39,14 +39,16 @@ public class ListaService {
     }
 
     public ResponseEntity<String> criarLista(ListaDTO listaRequest){
-        Optional<Usuario> usuario = usuarioRepository.findById(listaRequest.getIdUsuario());
-        if(usuario.isPresent()){
-            Lista lista = new Lista(listaRequest.getNome(), usuario.get());
-            if(listaRequest.getItens() != null)
-                lista.getListaItem().addAll(listaRequest.getItens().stream().map(Item::new).peek(item -> item.setPertenceA(lista)).toList());
-            listaRepository.save(lista);
-            return ResponseEntity.status(HttpStatus.OK).body("lista criada com sucesso!");
-        }
+        try{
+            Optional<Usuario> usuario = usuarioRepository.findById(listaRequest.getIdUsuario());
+            if(usuario.isPresent()){
+                Lista lista = new Lista(listaRequest.getNome(), usuario.get());
+                if(listaRequest.getItens() != null)
+                    lista.getListaItem().addAll(listaRequest.getItens().stream().map(Item::new).peek(item -> item.setPertenceA(lista)).toList());
+                listaRepository.save(lista);
+                return ResponseEntity.status(HttpStatus.OK).body("lista criada com sucesso!");
+            }
+        }catch (Exception ignore){}
         throw new NotFoundException("Usuario com id " + listaRequest.getIdUsuario() + " não encontrado");
     }
 
