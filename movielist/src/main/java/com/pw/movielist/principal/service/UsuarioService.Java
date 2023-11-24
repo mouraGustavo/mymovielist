@@ -4,6 +4,8 @@ import com.pw.movielist.principal.model.Usuario;
 import com.pw.movielist.principal.model.dto.UsuarioDTO;
 import com.pw.movielist.principal.repository.UsuarioRepository;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -16,11 +18,21 @@ public class UsuarioService{
         this.usuarioRepository = usuarioRepository;
     }
 
-    public ResponseEntity<String> criarUsuario(UsuarioDTO usuarioRequest){
+    public ResponseEntity<UsuarioDTO> criarUsuario(UsuarioDTO usuarioRequest){
         var usuario = new Usuario(usuarioRequest.getNome(), usuarioRequest.getEmail(), usuarioRequest.getSenha());
-        System.out.println(usuario);
         usuarioRepository.save(usuario);
-        return ResponseEntity.status(HttpStatus.OK).body("Usuario criado com sucesso!");
+        return ResponseEntity.status(HttpStatus.OK).body(new UsuarioDTO(usuario));
+    }
+
+    public  ResponseEntity<List<UsuarioDTO>> buscarUsuarios(){
+        return ResponseEntity.status(HttpStatus.OK).body(usuarioRepository.findAll().stream().map(UsuarioDTO::new).toList());
+    }
+
+    public ResponseEntity<UsuarioDTO> buscaUsuario(String email) {
+        return ResponseEntity.status(HttpStatus.OK).body(
+            usuarioRepository.findByEmail(email)
+            .stream().map(UsuarioDTO::new).toList().get(0)
+        );
     }
 }
 

@@ -1,19 +1,19 @@
 package com.pw.movielist.principal.controller;
 
-
-import com.pw.movielist.principal.model.Usuario;
 import com.pw.movielist.principal.model.dto.UsuarioDTO;
-import com.pw.movielist.principal.repository.UsuarioRepository;
+import com.pw.movielist.principal.service.UsuarioService;
 
 import io.swagger.v3.oas.annotations.Operation;
 
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -21,23 +21,28 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("usuario")
 public class UsuarioController {
 
-    private final UsuarioRepository usuarioRepository;
+    private final UsuarioService usuarioService;
 
-    public UsuarioController(UsuarioRepository usuarioRepository){
-        this.usuarioRepository = usuarioRepository;
+    public UsuarioController(UsuarioService usuarioService){
+        this.usuarioService = usuarioService;
     }
 
     @GetMapping("/listar")
     @Operation(summary = "Retorna os usuários")
-    public List<UsuarioDTO> getUsers(){
-        final List<Usuario> origens = usuarioRepository.findAll();
-        return UsuarioDTO.toDTO(origens);
+    public ResponseEntity<List<UsuarioDTO>> getUsers(){
+        return usuarioService.buscarUsuarios();
+    }
+
+    @GetMapping("/login")
+    @Operation(summary = "Verifica usuario")
+    public ResponseEntity<UsuarioDTO> getByEmail(@RequestParam String email){
+        return usuarioService.buscaUsuario(email);
     }
 
     @PostMapping("/cadastrar")
     @Operation(summary = "Cria um novo usuário")
-    public Usuario criarUsuario(@RequestBody Usuario usuario){
+    public ResponseEntity<UsuarioDTO> criarUsuario(@RequestBody UsuarioDTO usuario){
         System.out.println("passei aqui");
-        return usuarioRepository.save(usuario);
+        return usuarioService.criarUsuario(usuario);
     }
 }
