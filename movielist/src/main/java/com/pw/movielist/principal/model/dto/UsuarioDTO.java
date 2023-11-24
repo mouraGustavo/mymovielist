@@ -1,5 +1,7 @@
 package com.pw.movielist.principal.model.dto;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.pw.movielist.principal.model.Usuario;
 
@@ -49,4 +51,8 @@ public class UsuarioDTO {
     public void setSenha(String senha) {
         this.senha = senha;
     }
+    public static List<UsuarioDTO> toDTO(List<Usuario> origens) {
+        return origens.stream().map(UsuarioDTO::new).collect(Collectors.toList());
+    }
 }
+
