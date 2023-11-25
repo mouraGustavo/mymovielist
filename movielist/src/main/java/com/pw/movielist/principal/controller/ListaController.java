@@ -32,6 +32,12 @@ public class ListaController {
         return listaService.encontrarListaPeloId(idLista);
     }
 
+    @GetMapping("/usuario/{idUsuario}")
+    @Operation(summary = "Visualiza as listas de um usuario")
+    public List<ListaDTO> visualizarListasUsuario(@PathVariable Long idUsuario){
+        return listaService.encontrarListaPeloUsuario(idUsuario);
+    }
+
     @PostMapping("/{idLista}")
     @Operation(summary = "Editar uma lista")
     public ResponseEntity<String> editarLista(@PathVariable Long idLista, @RequestBody ListaDTO lista, @RequestParam String sessionId){
@@ -47,6 +53,11 @@ public class ListaController {
     @Operation(summary = "Adicionar itens a uma lista")
     public ResponseEntity<String> adicionarItens(@PathVariable Long idLista, @RequestBody List<ItemDTO> itens, @RequestParam String sessionId){
         return listaService.adicionarItensLista(itens, idLista);
+    }
+    @PostMapping("/item/{idItem}")
+    @Operation(summary = "Adicionar itens a uma lista")
+    public ResponseEntity<ItemDTO> adicionarItens(@PathVariable Long idItem, @RequestBody ItemDTO item, @RequestParam String sessionId){
+        return listaService.editarItem(idItem, item);
     }
 
     @PostMapping("/{idLista}/remover_item")

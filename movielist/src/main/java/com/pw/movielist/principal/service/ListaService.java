@@ -38,6 +38,16 @@ public class ListaService {
         throw new NotFoundException("Lista não encontrada");
     }
 
+    public List<ListaDTO> encontrarListaPeloUsuario(Long idUsuario){
+        try{
+            Optional<Usuario> usuario = usuarioRepository.findById(idUsuario);
+            if(usuario.isPresent()){
+                return usuario.get().getListas().stream().map(ListaDTO::new).toList();
+            }
+        }catch (Exception ignore){}
+        throw new NotFoundException("Usuario com id " + idUsuario + " não encontrado");
+    }
+
     public ResponseEntity<String> criarLista(ListaDTO listaRequest){
         try{
             Optional<Usuario> usuario = usuarioRepository.findById(listaRequest.getIdUsuario());
@@ -78,6 +88,18 @@ public class ListaService {
             return ResponseEntity.status(HttpStatus.OK).body("Itens removidos da lista " + idLista + " com sucesso!");
         }
         throw new NotFoundException("Lista " + idLista + " não encontrada");
+    }
+
+    public ResponseEntity<ItemDTO> editarItem(Long idItem, ItemDTO itemDTO) {
+        Optional<Item> item = itemRepository.findById(idItem);
+        if(item.isPresent()){
+            item.get().setAvaliacao(itemDTO.getAvaliacao().toString());
+            item.get().setStatus(itemDTO.getStatus());
+            item.get().setComentario(itemDTO.getComentario());
+            Item itemAtualizado = itemRepository.save(item.get());
+            return ResponseEntity.status(HttpStatus.OK).body(new ItemDTO(itemAtualizado));
+        }
+        throw new NotFoundException("Item " + idItem + " não encontrada");
     }
 
     public ResponseEntity<String> editarLista(Long idLista, ListaDTO listaRequest) {

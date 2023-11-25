@@ -30,8 +30,8 @@ public class UsuarioService{
 
     public ResponseEntity<UsuarioDTO> buscaUsuario(String email) {
         return ResponseEntity.status(HttpStatus.OK).body(
-            usuarioRepository.findByEmail(email)
-            .stream().map(UsuarioDTO::new).toList().get(0)
+                usuarioRepository.findByEmail(email)
+                        .stream().map(UsuarioDTO::new).toList().get(0)
         );
     }
 
