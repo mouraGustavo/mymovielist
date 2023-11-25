@@ -16,6 +16,10 @@ public class TmdbService {
         this.tmdbClient = tmdbClient;
     }
 
+    public TmdbCabecalhoDTO<TmdbDetalheFilmeDTO> mostrarFilmesPopulares(){
+        return tmdbClient.findPopular("Bearer " + tokenAuth, "pt-BR", 1);
+    }
+
     public TmdbCabecalhoDTO<TmdbEmpresaDTO> buscarEmpresa(String busca){
         return tmdbClient.searchCompany("Bearer " + tokenAuth, busca, 1);
     }

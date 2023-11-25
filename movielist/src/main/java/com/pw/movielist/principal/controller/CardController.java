@@ -19,6 +19,11 @@ public class CardController {
     public CardController(ConexaoTmdbService conexaoTmdbService) {
         this.conexaoTmdbService = conexaoTmdbService;
     }
+
+    @GetMapping("/populares")
+    public List<ExibirFilmeDTO> mostrarPopulares(){
+        return conexaoTmdbService.buscarFilmesPopulares();
+    }
     @GetMapping("/buscar/todos")
     public CardMultiBuscaDTO pesquisarFilmeSeriePessoa(@RequestParam String nome){
         return conexaoTmdbService.buscarCardFilmePessoaSerie(nome);

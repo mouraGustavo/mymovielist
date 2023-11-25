@@ -50,6 +50,13 @@ public interface IntegracaoTmdbClient {
             @RequestParam("language") String language,
             @PathVariable Long movieId);
 
+    @GetMapping("/movie/popular")
+    TmdbCabecalhoDTO<TmdbDetalheFilmeDTO> findPopular(
+            @RequestHeader("Authorization") String authorization,
+            @RequestParam("language") String language,
+            @RequestParam("page") Integer page
+    );
+
     @GetMapping("/movie/{movieId}/credits")
     CreditosDTO findCreditsMovie(
             @RequestHeader("Authorization") String authorization,
