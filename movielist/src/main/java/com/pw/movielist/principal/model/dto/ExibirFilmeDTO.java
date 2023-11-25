@@ -40,8 +40,7 @@ public class ExibirFilmeDTO {
         this.urlCapa = "https://image.tmdb.org/t/p/original" + filme.getPosterPath();
         this.urlImagemFundo = "https://image.tmdb.org/t/p/original" + filme.getBackdropPath();
         this.titulo = filme.getTitle();
-        this.descricao = filme.getOverview();
-        this.generos = filme.getGenres().stream().map(GenreDTO::getName).collect(Collectors.toList());
+        this.generos = filme.getGenres() != null ? filme.getGenres().stream().map(GenreDTO::getName).collect(Collectors.toList()): null;
         this.dataLancamento = filme.getReleaseDate();
         this.tituloOriginal = filme.getOriginalTitle();
         this.situacao = filme.getStatus();
