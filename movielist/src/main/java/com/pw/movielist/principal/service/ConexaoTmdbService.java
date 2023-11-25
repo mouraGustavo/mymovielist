@@ -30,8 +30,8 @@ public class ConexaoTmdbService {
         return resultadoBusca;
     }
 
-    public List<ExibirFilmeDTO> buscarFilmesPopulares(){
-        return tmdbService.mostrarFilmesPopulares().getResults().stream().map(ExibirFilmeDTO::new).toList();
+    public List<ExibirPopularesDTO> buscarFilmesPopulares(){
+        return tmdbService.mostrarFilmesPopulares().getResults().stream().map(ExibirPopularesDTO::new).toList();
     }
 
     public List<CardFilmeSerieDTO> buscarCardFilmeTmdb(String busca){

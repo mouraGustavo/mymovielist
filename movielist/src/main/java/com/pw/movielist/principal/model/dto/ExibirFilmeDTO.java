@@ -14,6 +14,8 @@ public class ExibirFilmeDTO {
 
     private String titulo;
 
+    private String descricao;
+
     private List<String> generos;
 
     private String dataLancamento;
@@ -38,7 +40,8 @@ public class ExibirFilmeDTO {
         this.urlCapa = "https://image.tmdb.org/t/p/original" + filme.getPosterPath();
         this.urlImagemFundo = "https://image.tmdb.org/t/p/original" + filme.getBackdropPath();
         this.titulo = filme.getTitle();
-        this.generos = filme.getGenres() != null ? filme.getGenres().stream().map(GenreDTO::getName).collect(Collectors.toList()): null;
+        this.descricao = filme.getOverview();
+        this.generos = filme.getGenres().stream().map(GenreDTO::getName).collect(Collectors.toList());
         this.dataLancamento = filme.getReleaseDate();
         this.tituloOriginal = filme.getOriginalTitle();
         this.situacao = filme.getStatus();
@@ -74,6 +77,14 @@ public class ExibirFilmeDTO {
 
     public void setUrlImagemFundo(String urlImagemFundo) {
         this.urlImagemFundo = urlImagemFundo;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 
     public String getTitulo() {

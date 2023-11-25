@@ -1,9 +1,6 @@
 package com.pw.movielist.principal.controller;
 
-import com.pw.movielist.principal.model.dto.CardFilmeSerieDTO;
-import com.pw.movielist.principal.model.dto.CardMultiBuscaDTO;
-import com.pw.movielist.principal.model.dto.CardPessoaDTO;
-import com.pw.movielist.principal.model.dto.ExibirFilmeDTO;
+import com.pw.movielist.principal.model.dto.*;
 import com.pw.movielist.principal.service.ConexaoTmdbService;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,7 +18,7 @@ public class CardController {
     }
 
     @GetMapping("/populares")
-    public List<ExibirFilmeDTO> mostrarPopulares(){
+    public List<ExibirPopularesDTO> mostrarPopulares(){
         return conexaoTmdbService.buscarFilmesPopulares();
     }
     @GetMapping("/buscar/todos")
