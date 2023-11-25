@@ -38,26 +38,26 @@ public class ExibirFilmeDTO {
         this.urlCapa = "https://image.tmdb.org/t/p/original" + filme.getPosterPath();
         this.urlImagemFundo = "https://image.tmdb.org/t/p/original" + filme.getBackdropPath();
         this.titulo = filme.getTitle();
-        this.generos = filme.getGenres().stream().map(GenreDTO::getName).collect(Collectors.toList());
+        this.generos = filme.getGenres() != null ? filme.getGenres().stream().map(GenreDTO::getName).collect(Collectors.toList()): null;
         this.dataLancamento = filme.getReleaseDate();
         this.tituloOriginal = filme.getOriginalTitle();
         this.situacao = filme.getStatus();
         this.idiomaOriginal = filme.getOriginalLanguage();
-        this.diretoresEscritores = filme.getCredits().getCrew()
+        this.diretoresEscritores = filme.getCredits() != null ? filme.getCredits().getCrew()
                 .stream()
                 .filter(cast -> cast.getJob().equals("Director") || cast.getJob().equals("Writer") || cast.getJob().equals("Screenplay"))
-                .map(CardPessoaDTO::new).collect(Collectors.toList());
-        this.elencoPrincipal = filme.getCredits().getCast()
+                .map(CardPessoaDTO::new).collect(Collectors.toList()): null;
+        this.elencoPrincipal = filme.getCredits() != null ? filme.getCredits().getCast()
                 .stream().limit(10)
                 .map(CardPessoaDTO::new)
-                .collect(Collectors.toList());
+                .collect(Collectors.toList()): null;
         this.assistaEm = filme.getHomepage();
-        this.duracao = filme.getRuntime() / 60 + "h" + filme.getRuntime() % 60 + "m";
-        this.trailers = filme.getVideos().getResults()
+        this.duracao = filme.getRuntime() != null ?filme.getRuntime() / 60 + "h" + filme.getRuntime() % 60 + "m": null;
+        this.trailers = filme.getVideos() != null ? filme.getVideos().getResults()
                 .stream()
                 .filter(trailer -> trailer.getSite().equals("YouTube") && trailer.getType().equals("Trailer"))
                 .map(trailer -> "https://www.youtube.com/watch?v=" + trailer.getKey())
-                .collect(Collectors.toList());;
+                .collect(Collectors.toList()):null;
     }
 
     public String getUrlCapa() {
