@@ -16,6 +16,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -85,9 +87,7 @@ public class ListaService {
                     } else if(itemDTO.getStatus().equals("completo")){
                         comentario = "terminou de assistir";
                     }
-                    ExibirFilmeDTO filme = conexaoTmdbService.detalharFilme(Long.valueOf(itemDTO.getIdTmdb()));
-                    comentario += " " + filme.getTituloOriginal();
-                    logRepository.save(new Log(lista.get().getUsuario().getId(), comentario, Long.valueOf(itemDTO.getIdTmdb())));
+                    logRepository.save(new Log(lista.get().getUsuario().getId(), comentario, Long.valueOf(itemDTO.getIdTmdb()), new Date()));
                 });
             } catch (Exception _ignore){}
 

@@ -23,10 +23,11 @@ public class Log {
     @Column(name = "data_acao")
     private Date dataAcao;
 
-    public Log(Long idUsuario, String acao, Long tmdbFilme) {
+    public Log(Long idUsuario, String acao, Long tmdbFilme, Date dataAcao) {
         this.idUsuario = idUsuario;
         this.acao = acao;
         this.tmdbFilme = tmdbFilme;
+        this.dataAcao = dataAcao;
     }
 
     public Log() {
