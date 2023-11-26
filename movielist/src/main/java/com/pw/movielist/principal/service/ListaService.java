@@ -5,7 +5,6 @@ import com.pw.movielist.principal.model.Item;
 import com.pw.movielist.principal.model.Lista;
 import com.pw.movielist.principal.model.Log;
 import com.pw.movielist.principal.model.Usuario;
-import com.pw.movielist.principal.model.dto.ExibirFilmeDTO;
 import com.pw.movielist.principal.model.dto.ItemDTO;
 import com.pw.movielist.principal.model.dto.ListaDTO;
 import com.pw.movielist.principal.repository.ItemRepository;
@@ -16,10 +15,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ListaService {
@@ -76,19 +76,10 @@ public class ListaService {
     public ResponseEntity<String> adicionarItensLista(List<ItemDTO> itensRequest, Long idLista) {
         Optional<Lista> lista = listaRepository.findById(idLista);
         if(lista.isPresent()) {
-            itemRepository.saveAll(itensRequest.stream().map(Item::new).peek(item -> item.setPertenceA(lista.get())).toList());
+            var itens = itemRepository.saveAll(itensRequest.stream().map(Item::new).peek(item -> item.setPertenceA(lista.get())).toList());
+
             try{
-                itensRequest.forEach(itemDTO -> {
-                    String comentario = "planeja assistir";
-                    if(itemDTO.getStatus().equals("assistindo")){
-                        comentario = "está assistindo";
-                    } else if(itemDTO.getStatus().equals("dropado")){
-                        comentario = "desistiu de assistir";
-                    } else if(itemDTO.getStatus().equals("completo")){
-                        comentario = "terminou de assistir";
-                    }
-                    logRepository.save(new Log(lista.get().getUsuario().getId(), comentario, Long.valueOf(itemDTO.getIdTmdb()), new Date()));
-                });
+                itens.forEach( item -> salvarLogCriacaoCard(new ItemDTO(item), item));
             } catch (Exception _ignore){}
 
             return ResponseEntity.status(HttpStatus.OK).body("Itens adicionados a lista " + idLista + " com sucesso!");
@@ -110,6 +101,9 @@ public class ListaService {
     public ResponseEntity<String> removerItens(List<Long> idItens, Long idLista) {
         Optional<Lista> lista = listaRepository.findById(idLista);
         if(lista.isPresent()){
+            List<Item> itensExcluir = lista.get().getListaItem().stream().filter( item -> idItens.contains(item.getId())).toList();
+            itensExcluir.forEach( item -> salvarLogExclusaoCard(new ItemDTO(item), item));
+            lista.get().getListaItem().removeAll(itensExcluir);
             itemRepository.deleteAllById(idItens);
             return ResponseEntity.status(HttpStatus.OK).body("Itens removidos da lista " + idLista + " com sucesso!");
         }
@@ -119,6 +113,7 @@ public class ListaService {
     public ResponseEntity<ItemDTO> editarItem(Long idItem, ItemDTO itemDTO) {
         Optional<Item> item = itemRepository.findById(idItem);
         if(item.isPresent()){
+            salvarLogAtualizacaoCard(itemDTO, item.get());
             item.get().setAvaliacao(itemDTO.getAvaliacao().toString());
             item.get().setStatus(itemDTO.getStatus());
             item.get().setComentario(itemDTO.getComentario());
@@ -127,6 +122,48 @@ public class ListaService {
         }
         throw new NotFoundException("Item " + idItem + " não encontrada");
     }
+
+    public void salvarLogExclusaoCard(ItemDTO itemDTO, Item item){
+        salvarLogGeral(itemDTO, item, "excluiu da lista "+ item.getPertenceA().getNome());
+    }
+
+    public void salvarLogCriacaoCard(ItemDTO itemDTO, Item item){
+        salvarLogGeral(itemDTO, item, getAcaoStatus(itemDTO.getStatus()));
+    }
+
+    public void salvarLogAtualizacaoCard(ItemDTO itemDTO, Item item){
+        salvarLogGeral(itemDTO, item, String.join(", ", getAcoes(itemDTO, item)));
+    }
+
+    public void salvarLogGeral(ItemDTO itemDTO, Item item, String acaoAcoes){
+        Long idUsuario = item.getPertenceA().getUsuario().getId();
+        Long idTmdb = Long.valueOf(itemDTO.getIdTmdb());
+        logRepository.save(new Log(idUsuario, acaoAcoes, idTmdb, new Date()));
+    }
+
+    private static List<String> getAcoes(ItemDTO itemDTO, Item item) {
+        List<String> acoes = new ArrayList<>();
+
+        if(!item.getAvaliacao().equals(itemDTO.getAvaliacao().toString()))
+            acoes.add("mudou a nota de " + item.getAvaliacao() + " para " + itemDTO.getAvaliacao());
+        if(!item.getStatus().equals(itemDTO.getStatus())){
+            acoes.add(getAcaoStatus(itemDTO.getStatus()));
+        }
+        if(!item.getComentario().equals(itemDTO.getComentario())){
+             acoes.add("mudou os comentarios");
+        }
+        return acoes;
+    }
+
+    public static String getAcaoStatus(String status){
+        return switch (status) {
+            case "assistindo" -> "está assistindo";
+            case "dropado" -> "desistiu de assistir";
+            case "completo" -> "terminou de assistir";
+            default -> "planeja assistir";
+        };
+    }
+
 
     public ResponseEntity<String> editarLista(Long idLista, ListaDTO listaRequest) {
         Optional<Lista> lista = listaRepository.findById(idLista);

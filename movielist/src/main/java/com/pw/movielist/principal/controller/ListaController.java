@@ -55,7 +55,7 @@ public class ListaController {
         return listaService.adicionarItensLista(itens, idLista);
     }
     @PostMapping("/item/{idItem}")
-    @Operation(summary = "Adicionar itens a uma lista")
+    @Operation(summary = "Editar item")
     public ResponseEntity<ItemDTO> adicionarItens(@PathVariable Long idItem, @RequestBody ItemDTO item, @RequestParam String sessionId){
         return listaService.editarItem(idItem, item);
     }
