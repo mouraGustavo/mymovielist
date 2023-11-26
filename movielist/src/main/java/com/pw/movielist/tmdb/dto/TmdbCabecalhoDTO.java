@@ -2,13 +2,14 @@ package com.pw.movielist.tmdb.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TmdbCabecalhoDTO<T> {
     @JsonProperty("page")
     private Integer page;
     @JsonProperty("results")
-    private List<T> results;
+    private List<T> results = new ArrayList<>();
     @JsonProperty("total_pages")
     private Integer totalPages;
     @JsonProperty("total_results")

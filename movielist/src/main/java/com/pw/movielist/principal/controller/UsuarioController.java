@@ -8,13 +8,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin(origins= "*", maxAge = 36)
@@ -50,5 +44,11 @@ public class UsuarioController {
     public ResponseEntity<UsuarioDTO> criarUsuario(@RequestBody UsuarioDTO usuario){
         System.out.println("passei aqui");
         return usuarioService.criarUsuario(usuario);
+    }
+
+    @PostMapping("/{idUsuario}/atualizar")
+    @Operation(summary = "Atualizar as informações de um usuário")
+    public ResponseEntity<UsuarioDTO> atualizarUsuario(@PathVariable Long idUsuario, @RequestBody UsuarioDTO usuario){
+        return usuarioService.atualizarUsuario(idUsuario, usuario);
     }
 }

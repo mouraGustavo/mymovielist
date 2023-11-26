@@ -2,12 +2,14 @@ package com.pw.movielist.principal.model.dto;
 
 import com.pw.movielist.tmdb.dto.GenreDTO;
 import com.pw.movielist.tmdb.dto.TmdbDetalheFilmeDTO;
-import com.pw.movielist.tmdb.dto.TmdbElencoDTO;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class ExibirFilmeDTO {
+
+    private Long id;
+
     private String urlCapa;
 
     private String urlImagemFundo;
@@ -37,6 +39,7 @@ public class ExibirFilmeDTO {
     private List<String> trailers;
 
     public ExibirFilmeDTO(TmdbDetalheFilmeDTO filme) {
+        this.id = filme.getId();
         this.urlCapa = "https://image.tmdb.org/t/p/original" + filme.getPosterPath();
         this.urlImagemFundo = "https://image.tmdb.org/t/p/original" + filme.getBackdropPath();
         this.titulo = filme.getTitle();
@@ -48,18 +51,26 @@ public class ExibirFilmeDTO {
         this.diretoresEscritores = filme.getCredits() != null ? filme.getCredits().getCrew()
                 .stream()
                 .filter(cast -> cast.getJob().equals("Director") || cast.getJob().equals("Writer") || cast.getJob().equals("Screenplay"))
-                .map(CardPessoaDTO::new).collect(Collectors.toList()): null;
+                .map(CardPessoaDTO::new).collect(Collectors.toList()) : null;
         this.elencoPrincipal = filme.getCredits() != null ? filme.getCredits().getCast()
                 .stream().limit(10)
                 .map(CardPessoaDTO::new)
-                .collect(Collectors.toList()): null;
+                .collect(Collectors.toList()) : null;
         this.assistaEm = filme.getHomepage();
-        this.duracao = filme.getRuntime() != null ?filme.getRuntime() / 60 + "h" + filme.getRuntime() % 60 + "m": null;
+        this.duracao = filme.getRuntime() != null ? filme.getRuntime() / 60 + "h" + filme.getRuntime() % 60 + "m" : null;
         this.trailers = filme.getVideos() != null ? filme.getVideos().getResults()
                 .stream()
                 .filter(trailer -> trailer.getSite().equals("YouTube") && trailer.getType().equals("Trailer"))
                 .map(trailer -> "https://www.youtube.com/watch?v=" + trailer.getKey())
-                .collect(Collectors.toList()):null;
+                .collect(Collectors.toList()) : null;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getUrlCapa() {

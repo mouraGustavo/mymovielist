@@ -5,6 +5,8 @@ import com.pw.movielist.tmdb.dto.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class TmdbService {
     @Value("${rest.tmdb.token}")
@@ -16,8 +18,8 @@ public class TmdbService {
         this.tmdbClient = tmdbClient;
     }
 
-    public TmdbCabecalhoDTO<TmdbDetalheFilmeDTO> mostrarFilmesPopulares(){
-        return tmdbClient.findPopular("Bearer " + tokenAuth, "pt-BR", 1);
+    public List<TmdbDetalheFilmeDTO> mostrarFilmesPopulares(){
+        return tmdbClient.findPopular("Bearer " + tokenAuth, "pt-BR", 1).getResults();
     }
 
     public TmdbCabecalhoDTO<TmdbEmpresaDTO> buscarEmpresa(String busca){
