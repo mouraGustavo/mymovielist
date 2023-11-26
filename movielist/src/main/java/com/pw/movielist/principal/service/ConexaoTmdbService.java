@@ -1,6 +1,7 @@
 package com.pw.movielist.principal.service;
 
 import com.pw.movielist.principal.model.dto.*;
+import com.pw.movielist.tmdb.dto.TmdbDetalheFilmeDTO;
 import com.pw.movielist.tmdb.dto.TmdbFilmeSerieDTO;
 import com.pw.movielist.tmdb.dto.TmdbPessoaDTO;
 import com.pw.movielist.tmdb.service.TmdbService;
@@ -30,8 +31,8 @@ public class ConexaoTmdbService {
         return resultadoBusca;
     }
 
-    public List<ExibirPopularesDTO> buscarFilmesPopulares(){
-        return tmdbService.mostrarFilmesPopulares().getResults().stream().map(ExibirPopularesDTO::new).toList();
+    public List<ExibirFilmeDTO> buscarFilmesPopulares(){
+        return tmdbService.mostrarFilmesPopulares().stream().map(ExibirFilmeDTO::new).toList();
     }
 
     public List<CardFilmeSerieDTO> buscarCardFilmeTmdb(String busca){

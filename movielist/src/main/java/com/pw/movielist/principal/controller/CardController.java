@@ -18,7 +18,7 @@ public class CardController {
     }
 
     @GetMapping("/populares")
-    public List<ExibirPopularesDTO> mostrarPopulares(){
+    public List<ExibirFilmeDTO> mostrarPopulares(){
         return conexaoTmdbService.buscarFilmesPopulares();
     }
     @GetMapping("/buscar/todos")

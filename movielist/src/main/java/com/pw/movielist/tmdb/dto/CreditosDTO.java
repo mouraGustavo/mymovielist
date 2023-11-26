@@ -2,14 +2,15 @@ package com.pw.movielist.tmdb.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CreditosDTO {
 
     @JsonProperty("cast")
-    private List<TmdbElencoDTO> cast;
+    private List<TmdbElencoDTO> cast = new ArrayList<>();
     @JsonProperty("crew")
-    private List<TmdbElencoDTO> crew;
+    private List<TmdbElencoDTO> crew = new ArrayList<>();;
 
     public List<TmdbElencoDTO> getCast() {
         return cast;

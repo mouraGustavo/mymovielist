@@ -2,6 +2,7 @@ package com.pw.movielist.tmdb.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TmdbDetalheFilmeDTO {
@@ -19,7 +20,7 @@ public class TmdbDetalheFilmeDTO {
     private Double budget;
 
     @JsonProperty("genres")
-    private List<GenreDTO> genres;
+    private List<GenreDTO> genres = new ArrayList<>();
 
     @JsonProperty("homepage")
     private String homepage;
@@ -46,10 +47,10 @@ public class TmdbDetalheFilmeDTO {
     private String posterPath;
 
     @JsonProperty("production_companies")
-    private List<ProductionCompanyDTO> productionCompanies;
+    private List<ProductionCompanyDTO> productionCompanies = new ArrayList<>();
 
     @JsonProperty("production_countries")
-    private List<ProductionCountryDTO> productionCountries;
+    private List<ProductionCountryDTO> productionCountries = new ArrayList<>();
 
     @JsonProperty("release_date")
     private String releaseDate;
@@ -61,7 +62,7 @@ public class TmdbDetalheFilmeDTO {
     private Integer runtime;
 
     @JsonProperty("spoken_languages")
-    private List<SpokenLanguageDTO> spokenLanguages;
+    private List<SpokenLanguageDTO> spokenLanguages = new ArrayList<>();
 
     @JsonProperty("status")
     private String status;
