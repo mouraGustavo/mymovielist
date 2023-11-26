@@ -137,7 +137,7 @@ public class ListaService {
 
     public void salvarLogGeral(ItemDTO itemDTO, Item item, String acaoAcoes){
         Long idUsuario = item.getPertenceA().getUsuario().getId();
-        Long idTmdb = Long.valueOf(itemDTO.getIdTmdb());
+        Long idTmdb = Long.valueOf(item.getIdImdb());
         logRepository.save(new Log(idUsuario, acaoAcoes, idTmdb, new Date()));
     }
 
