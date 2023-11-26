@@ -3,11 +3,14 @@ package com.pw.movielist.principal.service;
 import com.pw.movielist.principal.exception.NotFoundException;
 import com.pw.movielist.principal.model.Item;
 import com.pw.movielist.principal.model.Lista;
+import com.pw.movielist.principal.model.Log;
 import com.pw.movielist.principal.model.Usuario;
+import com.pw.movielist.principal.model.dto.ExibirFilmeDTO;
 import com.pw.movielist.principal.model.dto.ItemDTO;
 import com.pw.movielist.principal.model.dto.ListaDTO;
 import com.pw.movielist.principal.repository.ItemRepository;
 import com.pw.movielist.principal.repository.ListaRepository;
+import com.pw.movielist.principal.repository.LogRepository;
 import com.pw.movielist.principal.repository.UsuarioRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,10 +28,16 @@ public class ListaService {
 
     private final ItemRepository itemRepository;
 
-    public ListaService(ListaRepository listaRepository, UsuarioRepository usuarioRepository, ItemRepository itemRepository) {
+    private final LogRepository logRepository;
+
+    private final ConexaoTmdbService conexaoTmdbService;
+
+    public ListaService(ListaRepository listaRepository, UsuarioRepository usuarioRepository, ItemRepository itemRepository, LogRepository logRepository, ConexaoTmdbService conexaoTmdbService) {
         this.listaRepository = listaRepository;
         this.usuarioRepository = usuarioRepository;
         this.itemRepository = itemRepository;
+        this.logRepository = logRepository;
+        this.conexaoTmdbService = conexaoTmdbService;
     }
 
     public ListaDTO encontrarListaPeloId(Long id) throws NotFoundException {
@@ -66,8 +75,25 @@ public class ListaService {
         Optional<Lista> lista = listaRepository.findById(idLista);
         if(lista.isPresent()) {
             itemRepository.saveAll(itensRequest.stream().map(Item::new).peek(item -> item.setPertenceA(lista.get())).toList());
+            try{
+                itensRequest.forEach(itemDTO -> {
+                    String comentario = "planeja assistir";
+                    if(itemDTO.getStatus().equals("assistindo")){
+                        comentario = "está assistindo";
+                    } else if(itemDTO.getStatus().equals("dropado")){
+                        comentario = "desistiu de assistir";
+                    } else if(itemDTO.getStatus().equals("completo")){
+                        comentario = "terminou de assistir";
+                    }
+                    ExibirFilmeDTO filme = conexaoTmdbService.detalharFilme(Long.valueOf(itemDTO.getIdTmdb()));
+                    comentario += " " + filme.getTituloOriginal();
+                    logRepository.save(new Log(lista.get().getUsuario().getId(), comentario, Long.valueOf(itemDTO.getIdTmdb())));
+                });
+            } catch (Exception _ignore){}
+
             return ResponseEntity.status(HttpStatus.OK).body("Itens adicionados a lista " + idLista + " com sucesso!");
         }
+
         throw new NotFoundException("Lista " + idLista + " não encontrada");
     }
     public ResponseEntity<String> adicionarItemLista(ItemDTO itemRequest, Long idLista) {
