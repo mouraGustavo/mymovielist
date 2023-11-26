@@ -9,6 +9,7 @@ import com.pw.movielist.principal.repository.LogRepository;
 import com.pw.movielist.principal.repository.UsuarioRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,7 +35,7 @@ public class LogService {
     public List<Log> encontrarLogsUsuario(Long idUsuario) {
         Optional<Usuario> usuario = usuarioRepository.findById(idUsuario);
         if(usuario.isPresent()){
-            return logRepository.findByIdUsuario(idUsuario);
+            return logRepository.findByIdUsuario(idUsuario).stream().sorted(Comparator.comparingLong(Log::getId)).toList();
         }
         throw new NotFoundException("Usuario não encontrada");
     }
